@@ -1,4 +1,4 @@
-       <template>
+<template>
   <h3>Add new transaction</h3>
   <form id="form" @submit.prevent="onSubmit">
     <div class="form-control">
@@ -17,29 +17,28 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useToast } from 'vue-toastification'
 
-import { ref } from 'vue';
-import { useToast } from 'vue-toastification';
+const text = ref('')
+const amount = ref('')
 
-const text = ref('');
-const amount = ref ('')
+const emit = defineEmits(['transactionCompleted'])
+const toast = useToast()
 
-const emit = defineEmits(['transactionCompleted']);
-const toast = useToast();
+const onSubmit = () => {
+  if (!text.value || !amount.value) {
+    toast.error('Both fields must be filled')
+    return
+  }
+  const transactionData = {
+    text: text.value,
+    amount: parseFloat(amount.value),
+  }
 
-  const onSubmit = () => {
-    if(!text.value || !amount.value){
-      toast.error('Both fields must be filled');
-      return;
-    }
-    const transactionData = {
-      text: text.value,
-      amount: parseFloat(amount.value)
-    }
+  emit('transactionCompleted', transactionData)
 
-    emit('transactionCompleted', transactionData)
-
-    text.value = ' ';
-    amount.value = ' ';
-  };
+  text.value = ' '
+  amount.value = ' '
+}
 </script>
