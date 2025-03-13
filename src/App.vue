@@ -35,7 +35,7 @@ onMounted(() => {
 });
 
 const savedTransactionsToLocalStorage = () => {
-    localStorage.setItem('transaction', JSON.stringify(transactions.value))
+    localStorage.setItem('transactions', JSON.stringify(transactions.value))
   }
 
 const total = computed(() => {
